@@ -1,11 +1,11 @@
-#redbox{
+#redbox {
     height: 0px;
     width: 0px;
     border-bottom: 100px solid red;
     border-left: 100px solid transparent;
     position: relative;
   }
-  #bluebox{
+  #bluebox {
     background-color: blue;
     height: 100px;
     width: 100px;
