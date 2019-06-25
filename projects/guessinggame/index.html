@@ -7,7 +7,7 @@
 // Create a variable that holds the RANDOM number between 1-20
 var randomNum = Math.floor(Math.random() *20);
 // Part 2: Create variable that holds the number of turns
-
+var tries = 5
 // Create a variable for your "hint to the user" Ex: Guess my number between 1-20
 var hint = 'Guess my number between 1-20'
 // when is true != true?  What should our condition actually be?
@@ -17,7 +17,7 @@ while (true == true) {
 // Use the prompt method to ask the user for input. Use this to also display the "hint to the user"
 // Part 2: Also display how many tries the user has left
 
-var guess = prompt(hint);
+var guess = prompt(hint + tries);
 
 // Convert the users guess to a number
 guess = parseInt(guess, 10);
