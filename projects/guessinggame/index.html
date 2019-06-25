@@ -17,15 +17,15 @@ while (true == true) {
 // Use the prompt method to ask the user for input. Use this to also display the "hint to the user"
 // Part 2: Also display how many tries the user has left
 
-var guess = prompt(hint + tries);
+var guess = prompt(hint + ' You have ' + tries+' tries left.');
 
 // Convert the users guess to a number
 guess = parseInt(guess, 10);
 // Use an if statement to see if the player's guess is equal to the random one generated
 if (guess = randomNum) {
-    console.log('Correct!');
+    prompt('Correct!');
 } else {
-    console.log('Wrong.')
+    prompt('Wrong.')
 }
 
 // Use an else statement to notify the user if they guessed incorrectly
