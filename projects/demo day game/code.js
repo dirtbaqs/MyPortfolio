@@ -8,12 +8,12 @@ camera.position.set(0, -1000, 0);
 
 // background
 var textureBackground = new THREE.CubeTextureLoader().load([
+    "one.png",
+    "two.png",
     "1.png",
-    "2.png",
     "1.png",
-    "1.png",
-    "3.png",
-    "4.png"
+    "three.png",
+    "four.png"
 ]);
 scene.background = textureBackground;
 
@@ -38,8 +38,8 @@ spotLight.castShadow = true;
 spotLight.shadow.camera.near = 0.1;
 spotLight.shadow.camera.far = 300;
 
-var lightHelper = new THREE.SpotLightHelper( spotLight );
-scene.add( lightHelper );
+var lightHelper = new THREE.SpotLightHelper(spotLight);
+scene.add(lightHelper);
 
 // spotLight.shadow.camera.near = 500;
 // spotLight.shadow.camera.far = 4000;
@@ -52,8 +52,8 @@ scene.add(spotLight);
 var gltfLoader = new THREE.GLTFLoader();
 gltfLoader.setPath("antinous/");
 gltfLoader.load("scene.gltf", function (object) {
-    object.scene.position.set(10, 40, 10);
-    //object.scene.scale.set(0.005, 0.005, 0.005);
+    object.scene.position.set(10, 0, 10);
+    object.scene.scale.set(1.5, 1.5, 1.5);
     scene.add(object.scene);
 });
 
@@ -80,6 +80,29 @@ var cube = new THREE.Mesh(geometry, material);
 var textGeometry;
 
 var textMesh;
+
+// Create a texture loader so we can load our image file
+var imageLoader = new THREE.TextureLoader();
+
+// Load an image file into a custom material
+var imageMaterial = new THREE.MeshLambertMaterial({
+    map: imageLoader.load('sun.png'), transparent: true
+});
+
+// create a plane geometry for the image with a width of 10
+// and a height that preserves the image's aspect ratio
+var imageGeometry = new THREE.PlaneGeometry(600, 600);
+
+// combine our image geometry and material into a mesh
+var imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+
+// set the position of the image mesh in the x,y,z dimensions
+imageMesh.position.set(0, 200, -800);
+// add the image to the scene
+scene.add(imageMesh);
+
+var targetPositionY = 500;
+imageMesh.goingUp = true
 
 var loader = new THREE.FontLoader();
 loader.load('gentilis_bold.typeface.json', function (font) {
@@ -123,7 +146,7 @@ controls.maxPolarAngle = Math.PI * 0.5;
 controls.minDistance = 10;
 controls.maxDistance = 100;
 
-var sphere = new THREE.Mesh(new THREE.SphereBufferGeometry( 5, 32, 32), new THREE.MeshBasicMaterial({color: 0x00ffff}));
+var sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(5, 32, 32), new THREE.MeshBasicMaterial({ color: 0x00ffff }));
 sphere.position.set(0, 5, 0);
 sphere.castShadow = true;
 scene.add(sphere);
@@ -135,7 +158,7 @@ var groundTexture = new THREE.TextureLoader().load('tile2.png');
 groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 groundTexture.repeat.set(planeSize / 100, planeSize / 100);
 groundTexture.anisotropy = 6;
-var groundMaterial = new THREE.MeshStandardMaterial({map: groundTexture});
+var groundMaterial = new THREE.MeshStandardMaterial({ map: groundTexture });
 
 // plane
 var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(planeSize, planeSize), groundMaterial);
@@ -155,14 +178,22 @@ sound.volume = INITIAL_VOLUME;
 gui.add(sound, "volume", 0, 1, 0.01).onChange((val) => sound.setVolume(val));
 
 function animate() {
-    //controls.update();
+    controls.update();
     requestAnimationFrame(animate);
     cube.rotation.x -= 0.01;
     cube.rotation.y -= 0.01;
     cube.rotation.z -= 0.01;
     renderer.render(scene, camera);
     textMesh.rotation.y += 0.01;
-
+if (imageMesh.goingUp) {
+    imageMesh.position.y += 0.3
+} else {
+    imageMesh.position.y -= 0.3
+}
+    if (imageMesh.position.y <= 200) {
+        imageMesh.goingUp = true
+    } if (imageMesh.position.y >= targetPositionY) {
+        imageMesh.goingUp = false
+    }
 }
 animate();
-
