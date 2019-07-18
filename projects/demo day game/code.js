@@ -2,7 +2,7 @@
 
 
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 2000);
 
 camera.position.set(0, -1000, 0);
 
@@ -47,14 +47,51 @@ scene.add(lightHelper);
 
 scene.add(spotLight);
 
+var dolphinTexture = new THREE.MTLLoader();
+dolphinTexture.load('dolphinTexture.mtl', function (materials) {
+    materials.preload();
+})
+// instantiate a loader
+var dolphinLoader = new THREE.OBJLoader();
+dolphinLoader.setMaterials(materials);
+// load a resource
+dolphinLoader.load(
+    // resource URL
+    'dolphin.obj',
+    // called when resource is loaded
+    function (dolphin) {
+        scene.add(dolphin);
+
+    })
+
 //Roman head 1
 //from https://sketchfab.com/3d-models/marcus-aurelius-03d7639ecbe943bba20b22ba1f9746d3#download
 var gltfLoader = new THREE.GLTFLoader();
 gltfLoader.setPath("antinous/");
 gltfLoader.load("scene.gltf", function (object) {
-    object.scene.position.set(10, 0, 10);
-    object.scene.scale.set(1.5, 1.5, 1.5);
+    object.scene.position.set(50, 0, 30);
+    object.scene.scale.set(2, 2, 2);
     scene.add(object.scene);
+});
+
+//Roman head 2
+//from https://sketchfab.com/3d-models/marcus-aurelius-03d7639ecbe943bba20b22ba1f9746d3#download
+var gltfLoaderTwo = new THREE.GLTFLoader();
+gltfLoaderTwo.setPath("antinous/");
+gltfLoaderTwo.load("scene.gltf", function (objectTwo) {
+    objectTwo.scene.position.set(-50, 0, -30);
+    objectTwo.scene.scale.set(2, 2, 2);
+    scene.add(objectTwo.scene);
+});
+
+//Roman head 3
+//from https://sketchfab.com/3d-models/marcus-aurelius-03d7639ecbe943bba20b22ba1f9746d3#download
+var gltfLoaderThree = new THREE.GLTFLoader();
+gltfLoaderThree.setPath("antinous/");
+gltfLoaderThree.load("scene.gltf", function (objectThree) {
+    objectThree.scene.position.set(30, 0, 50);
+    objectThree.scene.scale.set(2, 2, 2);
+    scene.add(objectThree.scene);
 });
 
 // music
@@ -81,6 +118,18 @@ var textGeometry;
 
 var textMesh;
 
+var mountainLoader = new THREE.OBJLoader();
+mountainLoader.load(
+    // resource URL
+    'untitled.obj',
+    // called when resource is loaded
+    function (object) {
+        object.scale.set(300, 300, 300);
+        object.position.set(0, -200, -1200);
+        scene.add(object);
+
+    })
+
 // Create a texture loader so we can load our image file
 var imageLoader = new THREE.TextureLoader();
 
@@ -97,11 +146,11 @@ var imageGeometry = new THREE.PlaneGeometry(600, 600);
 var imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
 
 // set the position of the image mesh in the x,y,z dimensions
-imageMesh.position.set(0, 200, -800);
+imageMesh.position.set(0, 400, -1100);
 // add the image to the scene
 scene.add(imageMesh);
 
-var targetPositionY = 500;
+var targetPositionY = 850;
 imageMesh.goingUp = true
 
 var loader = new THREE.FontLoader();
@@ -185,12 +234,12 @@ function animate() {
     cube.rotation.z -= 0.01;
     renderer.render(scene, camera);
     textMesh.rotation.y += 0.01;
-if (imageMesh.goingUp) {
-    imageMesh.position.y += 0.3
-} else {
-    imageMesh.position.y -= 0.3
-}
-    if (imageMesh.position.y <= 200) {
+    if (imageMesh.goingUp) {
+        imageMesh.position.y += 0.3
+    } else {
+        imageMesh.position.y -= 0.3
+    }
+    if (imageMesh.position.y <= 400) {
         imageMesh.goingUp = true
     } if (imageMesh.position.y >= targetPositionY) {
         imageMesh.goingUp = false
