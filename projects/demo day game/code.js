@@ -46,24 +46,6 @@ scene.add(lightHelper);
 // spotLight.shadow.camera.fov = 30;
 
 scene.add(spotLight);
-/*/
-var dolphinTexture = new THREE.MTLLoader();
-dolphinTexture.load('dolphinTexture.mtl', function (materials) {
-    materials.preload();
-})
-// instantiate a loader
-var dolphinLoader = new THREE.OBJLoader();
-dolphinLoader.setMaterials(materials);
-// load a resource
-dolphinLoader.load(
-    // resource URL
-    'dolphin.obj',
-    // called when resource is loaded
-    function (dolphin) {
-        scene.add(dolphin);
-
-    })
-/*/
 
 //Roman head 1
 //from https://sketchfab.com/3d-models/marcus-aurelius-03d7639ecbe943bba20b22ba1f9746d3#download
